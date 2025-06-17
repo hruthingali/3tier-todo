@@ -2,19 +2,24 @@ version: 0.2
 
 env:
   variables:
-    ACCOUNT_ID: 216989142685
+    ACCOUNT_ID: 557690580165
     REGION: us-east-1
     REPO_NAME: final
     IMAGE_TAG: app
-    IMAGE_URI: 216989142685.dkr.ecr.us-east-1.amazonaws.com/final:app
+    IMAGE_URI: 557690580165.dkr.ecr.us-east-1.amazonaws.com/final:app
 
 phases:
   install:
     runtime-versions:
-      java: corretto17  # ONLY include Java here; Docker doesn't belong here
+      java: corretto17
     commands:
-      - echo Installing Maven...
-      - yum install -y maven docker
+      - echo Installing Maven and Docker...
+      - yum install -y maven
+      - yum update -y
+      - amazon-linux-extras enable docker
+      - yum install -y docker
+      - service docker start
+      - usermod -a -G docker ec2-user
 
   pre_build:
     commands:
