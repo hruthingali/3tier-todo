@@ -14,12 +14,7 @@ phases:
       java: corretto17
     commands:
       - echo Installing Maven and Docker...
-      - yum install -y maven
-      - yum update -y
-      - amazon-linux-extras enable docker
-      - yum install -y docker
-      - service docker start
-      - usermod -a -G docker ec2-user
+      -  yum install -y maven docker
 
   pre_build:
     commands:
