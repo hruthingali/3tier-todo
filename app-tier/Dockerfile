@@ -1,14 +1,19 @@
-# Use lightweight JDK image to run the jar
-#FROM eclipse-temurin:17-jdk-alpine
-
+# Base image with Amazon Corretto JDK
 FROM public.ecr.aws/amazoncorretto/amazoncorretto:17
 
+# Install MySQL client (no sudo)
+RUN yum update -y && \
+    yum install -y mysql && \
+    yum clean all
 
+# Set working directory
 WORKDIR /app
-# Copy the jar from the target folder
-COPY target/*.jar app.jar
-RUN sudo yum install -y mysql
 
-# Expose the default Spring Boot port
+# Copy the built JAR
+COPY target/*.jar app.jar
+
+# Expose default port
 EXPOSE 80
+
+# Run the app
 ENTRYPOINT ["java", "-jar", "app.jar"]
