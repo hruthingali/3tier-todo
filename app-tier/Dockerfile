@@ -7,6 +7,7 @@ FROM public.ecr.aws/amazoncorretto/amazoncorretto:17
 WORKDIR /app
 # Copy the jar from the target folder
 COPY target/*.jar app.jar
+RUN sudo yum install -y mysql
 
 # Expose the default Spring Boot port
 EXPOSE 80
